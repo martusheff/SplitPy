@@ -4,9 +4,9 @@ class Friend:
         self.name = name
         self.contribution = int(contribution)
 
+
 # Program starts here.
 def main():
-
     # Creates global variables that are used throughout the program.
     global party_size
     global party
@@ -23,14 +23,11 @@ def main():
     print(f"{party_size} people... this is gonna be tough. Let's get some names.")
 
     # Initial party creation loop.
-    for i in range(int(party_size)):
-        name = input(f"First name of person #{i+1}\n")
-        contribution = input(f"How much did {name} contribute?\n")
-
-        name = Friend(name, contribution)
-        party.append(name)
-        pool += int(contribution)
-
+    for i in range(party_size):
+        name = input(f"Name of person #{i + 1}\n")
+        contribution = int(input(f"How much did {name} contribute?\n"))
+        party.append(Friend(name, contribution))
+        pool += contribution
         print("Alright... on to the next!")
 
     # Further user interaction lives within 'make_selection()' function.
@@ -40,21 +37,21 @@ def main():
     print("I hope SplitPy was able to help! Until next time! :D")
 
 
-
 # Returns list of party members name and contributions.
 def check_contributions():
     for i in range(int(party_size)):
         print(f"{party[i].name} has contributed ${party[i].contribution}.")
 
+
 # Determines pool $ total.
 def get_total():
     print(f"The pool total is ${pool}.")
 
+
 # Determines total amount owed.
 def get_amounts_owed():
-    global pool
-    pool_average = pool/int(party_size)
 
+    pool_average = pool / int(party_size)
 
     for i in range(int(party_size)):
         curr_contribution = int(party[i].contribution)
@@ -67,45 +64,40 @@ def get_amounts_owed():
         else:
             print(f"{party[i].name} is good to go! :D")
 
+
 # Adds party member.
 def add_party_member():
     global pool
-    global party
-    global party_size
-
     name = input("Welcome to the party! What's your first name?\n")
     contribution = int(input((f"{name}!! oh my God that's right! Sorry,"
-                              f"I'm not good with names. How much did you contribute? :)\n")))
+                              f" I'm not good with names. How much did you contribute? :)\n")))
     pool += contribution
     party_size += 1
-    name = Friend(name, contribution)
-    party.append(name)
+    party.append(Friend(name, contribution))
     print("Well awesome, glad you could make it!\nParty member added.")
+
 
 # Adds contribution.
 def add_contribution():
-    global party_size
-    global pool
-
+    global party
     new_contribution = int(input("Wow, that was wild! How much did that cost?\n"))
     who_payed = input(f"Who payed?\n")
 
     for i in range(party_size):
         if who_payed == party[i].name:
             party[i].contribution += new_contribution
-        else:
-            print(f"{who_payed} is not a member of your party.")
+        return
+
+    print(f"Oh, {who_payed} covered it?\nContribution updated.")
+
 
     pool += new_contribution
 
-    print(f"Oh, {party[i].name} covered it?\nContribution updated.")
 
 
-# Removes party member (takes acount for party member running on the bill/paying their share.)
+
+# Removes party member (takes account for party member running on the bill/paying their share.)
 def remove_party_member():
-    global party_size
-    global party
-    global pool
 
     removed_member = input("Who left?\n")
     dine_n_dash = input("Did they run away without contributing?\n Enter 'y' for yes or 'n' for no.\n")
@@ -124,7 +116,7 @@ def remove_party_member():
         for i in range(party_size):
 
             if removed_member == party[i].name:
-                difference = (pool/int(party_size) - int(party[i].contribution))
+                difference = (pool / int(party_size) - int(party[i].contribution))
                 total_contribution = int(party[i].contribution) + difference
                 pool -= total_contribution
                 party.remove(party[i])
@@ -133,12 +125,8 @@ def remove_party_member():
         print(f"Wish you could've stayed longer {removed_member}. Take care!\nContributions Updated.")
 
 
-
-
-
 # Python style switch case statement.
 def make_selection():
-
     print("Main Screen: Select an option from the list below...")
     print("----------------------------------------------------")
 
@@ -172,6 +160,7 @@ def make_selection():
                 making_selection = False
             case _:
                 print("Invalid option.")
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
